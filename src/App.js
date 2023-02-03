@@ -29,9 +29,12 @@ export default function App() {
     listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== value.kegiatan))
   }
   const checkCompleteHandler = (value) => {
-    isCompleted(!value.isCompleted)
-    listkegiatansSet((prev) => [...prev].filter((e) => e.isCompleted !== value.isCompleted))
+    const newState = listkegiatans.map(prev =>
+      prev.indeks === value.indeks ? { ...prev, isCompleted: !value.isCompleted } : prev
+    )
+    listkegiatansSet(newState)
   }
+  console.log(listkegiatans);
 
 
   return (
@@ -39,15 +42,15 @@ export default function App() {
       <h1>TODOS</h1>
       <form onSubmit={onSubmitHandler}>
         <div style={{ display: 'flex', gap: '20px' }}>
-          <input style={{ width: '500px' }} type={'text'} placeholder='kegiatan' value={kegiatan} onChange={(e) => kegiatanSet(e.target.value)} />
+          <input style={{ width: '500px' }} type={'text'} placeholder='Add todo...' value={kegiatan} onChange={(e) => kegiatanSet(e.target.value)} />
           <button type='submit'>Submit</button>
         </div>
       </form>
       <div>
         {listkegiatans.map((el) => (
-          <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-            <input type={'checkbox'} onClick={() => checkCompleteHandler(el)}></input>
-            <div key={el.indeks} style={{ textDecoration: el.isCompleted ? 'line-through' : null }}>{el.kegiatan}</div>
+          <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }} key={el.indeks}>
+            <input value={el.isCompleted} type={'checkbox'} onClick={() => checkCompleteHandler(el)}></input>
+            <div style={el.isCompleted ? { textDecoration: 'line-through'} : null}>{el.kegiatan}</div>
             <button onClick={() => listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== el.kegiatan))}>Delete</button>
             <button onClick={() => { editHandler(el) }}>Edit</button>
           </div>
