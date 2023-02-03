@@ -28,13 +28,15 @@ export default function App() {
     kegiatanSet(value.kegiatan)
     listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== value.kegiatan))
   }
+  const deleteHandler = (value) => {
+    listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== value.kegiatan))
+  }
   const checkCompleteHandler = (value) => {
     const newState = listkegiatans.map(prev =>
       prev.indeks === value.indeks ? { ...prev, isCompleted: !value.isCompleted } : prev
     )
     listkegiatansSet(newState)
   }
-  console.log(listkegiatans);
 
 
   return (
@@ -50,8 +52,8 @@ export default function App() {
         {listkegiatans.map((el) => (
           <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }} key={el.indeks}>
             <input value={el.isCompleted} type={'checkbox'} onClick={() => checkCompleteHandler(el)}></input>
-            <div style={el.isCompleted ? { textDecoration: 'line-through'} : null}>{el.kegiatan}</div>
-            <button onClick={() => listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== el.kegiatan))}>Delete</button>
+            <div style={el.isCompleted ? { textDecoration: 'line-through' } : null}>{el.kegiatan}</div>
+            <button onClick={() => { deleteHandler(el) }}>Delete</button>
             <button onClick={() => { editHandler(el) }}>Edit</button>
           </div>
         ))}
