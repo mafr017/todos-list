@@ -26,10 +26,10 @@ export default function App() {
   }
   const editHandler = (value) => {
     kegiatanSet(value.kegiatan)
-    listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== value.kegiatan))
+    listkegiatansSet((prev) => [...prev].filter((e) => e.indeks !== value.indeks))
   }
   const deleteHandler = (value) => {
-    listkegiatansSet((prev) => [...prev].filter((e) => e.kegiatan !== value.kegiatan))
+    listkegiatansSet((prev) => [...prev].filter((e) => e.indeks !== value.indeks))
   }
   const checkCompleteHandler = (value) => {
     const newState = listkegiatans.map(prev =>
